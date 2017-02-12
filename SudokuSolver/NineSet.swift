@@ -22,8 +22,23 @@ struct NineSet: Equatable, CustomStringConvertible {
         nums = [Bool](repeating: full, count: 9)
     }
 
+    subscript(num: Int) -> Bool {
+        get {
+            return nums[num - 1]
+        }
+        set {
+            nums[num - 1] = newValue
+        }
+    }
+
     func contains(_ num: Int) -> Bool {
         return nums[num - 1]
+    }
+
+    mutating func union(set: NineSet) {
+        for n in 1...9 {
+            self[n] = self[n] || set[n]
+        }
     }
 
     mutating func add(_ num: Int) {

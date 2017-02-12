@@ -18,11 +18,21 @@ class Solver {
         while true {
             numberOfPasses += 1
             print("Pass \(numberOfPasses):")
+
             let previousBoard = board
-            let possibilities = Solver.possibilities(for: board)
+
+            // Find the possibilites and reduce them
+            var possibilities = Solver.possibilities(for: board)
+            while true {
+                let previousPossibilities = possibilities
+                possibilities = Solver.reduce(possibilities: possibilities)
+                if possibilities == previousPossibilities {
+                    break
+                }
+            }
+
             board = Solver.reduce(board: board, with: possibilities)
             print(board)
-            print(possibilities)
 
             if board.solved {
                 print("solved!")
@@ -95,15 +105,90 @@ class Solver {
         return possibilities
     }
 
+    static func reduce(possibilities: PossibilityBoard) -> PossibilityBoard {
+        var reducedPossibilities = possibilities
+
+        enum LinePossibility {
+            case NoLines
+            case OneLine(line: Int)
+            case MultipleLines
+
+            mutating func add(line newLine: Int) {
+                switch self {
+                case .NoLines:
+                    self = .OneLine(line: newLine)
+                case .OneLine(line: let line):
+                    if line != newLine {
+                        self = .MultipleLines
+                    }
+                default:
+                    break
+                }
+            }
+        }
+
+        for boxRow in 0..<3 {
+            for boxCol in 0..<3 {
+                for num in 1...9 {
+                    var rowPossibility = LinePossibility.NoLines
+                    var colPossibility = LinePossibility.NoLines
+
+                    for cellRow in 0..<3 {
+                        for cellCol in 0..<3 {
+                            let row = boxRow * 3 + cellRow
+                            let col = boxCol * 3 + cellCol
+                            if possibilities[row, col].contains(num) {
+                                rowPossibility.add(line: cellRow)
+                                colPossibility.add(line: cellCol)
+                            }
+                        }
+                    }
+
+                    switch rowPossibility {
+                    case .OneLine(line: let takenRow):
+                        for col in 0..<9 {
+                            guard col / 3 != boxCol else {
+                                continue
+                            }
+
+                            let row = boxRow * 3 + takenRow
+                            if reducedPossibilities[row, col].contains(num) {
+                                print("removing possibility of \(num) at [\(row), \(col)] because the row will be taken by box [\(boxRow), \(boxCol)]")
+                                reducedPossibilities[row, col].remove(num)
+                            }
+                        }
+                    default:
+                        break
+                    }
+
+                    switch colPossibility {
+                    case .OneLine(line: let takenCol):
+                        for row in 0..<9 {
+                            guard row / 3 != boxRow else {
+                                continue
+                            }
+
+                            let col = boxCol * 3 + takenCol
+                            if reducedPossibilities[row, col].contains(num) {
+                                print("removing possibility of \(num) at [\(row), \(col)] because the column will be taken by box [\(boxRow), \(boxCol)]")
+                                reducedPossibilities[row, col].remove(num)
+                            }
+                        }
+                    default:
+                        break
+                    }
+                }
+            }
+        }
+
+        return reducedPossibilities
+    }
+
     static func reduce(board: Board, with possibilities: PossibilityBoard) -> Board {
         var reducedBoard = board
 
         for row in 0..<9 {
             for col in 0..<9 {
-                guard board[row, col] == 0 else {
-                    continue
-                }
-
                 for num in 1...9 {
                     guard possibilities[row, col].contains(num) else {
                         continue
