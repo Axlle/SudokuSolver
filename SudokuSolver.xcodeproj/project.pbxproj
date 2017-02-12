@@ -11,6 +11,7 @@
 		3D4769911E4EDD4C0077F087 /* Board.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4769901E4EDD4C0077F087 /* Board.swift */; };
 		3D4769931E4EDD5C0077F087 /* Solver.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4769921E4EDD5C0077F087 /* Solver.swift */; };
 		3D4769951E4EDD8D0077F087 /* NineSet.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4769941E4EDD8D0077F087 /* NineSet.swift */; };
+		3D4769971E4FFFE50077F087 /* Parser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 3D4769961E4FFFE50077F087 /* Parser.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -31,6 +32,7 @@
 		3D4769901E4EDD4C0077F087 /* Board.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Board.swift; sourceTree = "<group>"; };
 		3D4769921E4EDD5C0077F087 /* Solver.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Solver.swift; sourceTree = "<group>"; };
 		3D4769941E4EDD8D0077F087 /* NineSet.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NineSet.swift; sourceTree = "<group>"; };
+		3D4769961E4FFFE50077F087 /* Parser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Parser.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -65,6 +67,7 @@
 			children = (
 				3D4769871E48344E0077F087 /* main.swift */,
 				3D4769921E4EDD5C0077F087 /* Solver.swift */,
+				3D4769961E4FFFE50077F087 /* Parser.swift */,
 				3D4769901E4EDD4C0077F087 /* Board.swift */,
 				3D4769941E4EDD8D0077F087 /* NineSet.swift */,
 			);
@@ -131,6 +134,7 @@
 			files = (
 				3D4769881E48344E0077F087 /* main.swift in Sources */,
 				3D4769931E4EDD5C0077F087 /* Solver.swift in Sources */,
+				3D4769971E4FFFE50077F087 /* Parser.swift in Sources */,
 				3D4769951E4EDD8D0077F087 /* NineSet.swift in Sources */,
 				3D4769911E4EDD4C0077F087 /* Board.swift in Sources */,
 			);
@@ -262,6 +266,7 @@
 				3D47698D1E48344E0077F087 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 	};

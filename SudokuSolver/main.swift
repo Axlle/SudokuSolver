@@ -25,42 +25,7 @@ let j1  = "--3---78-\n---938---\n--1--7--2\n4--3-----\n3-2-8-4-9\n-----6--1\n2--
 let j2  = "--159----\n5------68\n---7-4-2-\n------84-\n-5--3--1-\n-18------\n-3-1-2---\n96------1\n----897--"
 let solved = "123456789\n456789123\n789123456\n231564897\n564897231\n897231564\n312645978\n645978312\n978312645"
 
-enum ParserError: Error {
-    case InvalidNumberOfRows
-    case InvalidNumberOfColumns
-    case InvalidCharacter
-    case InvalidBoard
-}
-
-func parseBoard(string: String) throws -> Board {
-    var board = Board()
-
-    let rows = string.components(separatedBy: "\n")
-    guard rows.count == 9 else {
-        throw ParserError.InvalidNumberOfRows
-    }
-    for (row, line) in rows.enumerated() {
-        guard line.unicodeScalars.count == 9 else {
-            throw ParserError.InvalidNumberOfColumns
-        }
-        for (col, char) in line.unicodeScalars.enumerated() {
-            if char.value >= UnicodeScalar("1").value && char.value <= UnicodeScalar("9").value {
-                let num = char.value - UnicodeScalar("0").value
-                board[row, col] = Int(num)
-            } else if char != "-" {
-                throw ParserError.InvalidCharacter
-            }
-        }
-    }
-
-    guard board.valid else {
-        throw ParserError.InvalidBoard
-    }
-
-    return board
-}
-
-var b = try! parseBoard(string: j2)
+var b = try! Parser.parse(string: j2)
 print(b)
 Solver.solve(board: b)
 
