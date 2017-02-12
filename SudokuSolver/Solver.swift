@@ -22,6 +22,7 @@ class Solver {
             let possibilities = Solver.possibilities(for: board)
             board = Solver.reduce(board: board, with: possibilities)
             print(board)
+            print(possibilities)
 
             if board.solved {
                 print("solved!")
@@ -31,7 +32,6 @@ class Solver {
                 break
             } else if board == previousBoard {
                 print("no progress")
-                print(possibilities)
                 break
             }
         }
@@ -168,6 +168,24 @@ class Solver {
                     }
                     if uniqueInBox {
                         print("inserting \(num) at [\(row), \(col)], because it is unique in the box")
+                        reducedBoard[row, col] = num
+                        break
+                    }
+
+                    // Cells
+                    var lastInCell = true
+                    for otherNum in 1...9 {
+                        guard otherNum != num else {
+                            continue
+                        }
+
+                        if possibilities[row, col].contains(otherNum) {
+                            lastInCell = false
+                            break
+                        }
+                    }
+                    if lastInCell {
+                        print("inserting \(num) at [\(row), \(col)], because it is last remaining in the cell")
                         reducedBoard[row, col] = num
                         break
                     }
